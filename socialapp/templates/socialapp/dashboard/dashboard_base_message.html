@@ -1,0 +1,24 @@
+{% include "./parts/header.html" %}
+<body>
+    <div id="dashboard" class="columns is-marginless">
+        <aside class="column is-2">
+            {% include './parts/desktop_navbar.html' %}
+        </aside>
+        <div class="column is-10" id="dashboard-content">
+            <div class="section">
+                <div class="container">
+                    <div class="columns is-centered">
+                        <div class="column is-7">
+                            <h1 class="title is-4 is-bold is-size-5-mobile">{% block title %}{% endblock %}</h1>
+                            {% include './parts/messages.html' with messages=messages %}
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "./parts/footer.html" %}
+</body>
+</html>

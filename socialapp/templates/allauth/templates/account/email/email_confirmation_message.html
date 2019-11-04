@@ -1,0 +1,28 @@
+{% extends '../../email/base.html' %}
+{% block content %}
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+
+<h2>Hello!</h2>
+<strong>Glad to have you onboard.</strong>
+<p>You need to verify your email address and you are all set.</p>
+
+<p>
+    <a href="{{ activate_url }}">Click here to verify your email</a> or copy and paste the link below on your browser
+</p>
+
+<p>
+    {{ activate_url }}
+</p>
+
+<h4>Login details</h4>
+<p>
+    Username: {{ user_display }}<br>
+    Password: 🤪(we weren't going to show that)
+</p>
+
+
+{% endblocktrans %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}<strong>Cheers!</strong>
+{% endblocktrans %}
+{% endautoescape %}
+{% endblock %}

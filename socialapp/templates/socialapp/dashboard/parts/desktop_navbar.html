@@ -1,0 +1,53 @@
+{% load menu_active static %}
+
+<div class="navbar is-transparent" id="dashboard-navbar">
+    <div class="navbar-brand ">
+        <a href="{% url 'dashboard' %}" class="menu-item">
+            <img src="{% static 'socialapp/images/footer-icon.png' %}" alt="Dashboard">
+        </a>
+        <a href="javascript:;" class="navbar-burger" role="menu" data-target="dashboard-menu-wrapper">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+    </div>
+</div>
+<div class="menu-wrapper" id="dashboard-menu-wrapper">
+    {% if user_profile %}
+    <p class="has-text-white">
+        Hello, {{ user_profile.fullname }}
+    </p>
+    <hr style="height: 1px; opacity: .2;">
+
+    {% endif %}
+    <nav class="menu">
+        <ul class="menu-list">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'influencers' %}">Influencers</a></li>
+        </ul>
+        <p class="menu-label">
+            General
+        </p>
+        <ul class="menu-list">
+            <li><a href="{% url 'dashboard' %}" class="{{ request.path|menu_active:'/dashboard' }}">Dashboard</a></li>
+            {% if is_influencer %}
+            <li><a href="{% url 'social_media_connect' %}" class="{{ request.path|menu_active:'/dashboard/connect' }}">Connect</a></li>
+            <li><a href="{% url 'dashboard_package' %}" class="{{ request.path|menu_active:'/dashboard/package' }}">Offers</a></li>
+            {% endif %}
+            {% if not is_influencer %}
+            <li><a href="#" class="">Campaigns</a></li>
+            {% endif %}
+            <li><a href="{% url 'dashboard_lists' %}" class="{{ request.path|menu_active:'/dashboard/lists' }}">Lists</a></li>
+            <li><a href="{% url 'dashboard_messages' %}" class="{{ request.path|menu_active:'/dashboard/messages' }}">Messages</a></li>
+        </ul>
+
+        <p class="menu-label">
+            Account
+        </p>
+        <ul class="menu-list">
+            <li><a href="{% url 'dashboard_profile' %}" class="{{ request.path|menu_active:'/dashboard/profile' }}">Profile</a></li>
+            <li><a href="{% url 'account_logout' %}">Logout</a></li>
+            <li></li>
+        </ul>
+    </nav>
+</div>

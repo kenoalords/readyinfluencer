@@ -1,0 +1,68 @@
+{% extends '../base/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="section is-medium is-white" id="hero">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-10">
+                    <div class="columns is-multiline reverse-on-mobile">
+                        <div class="column is-6">
+                            <h1 class="title is-1 is-bold is-size-4-mobile">
+                                Nigeria's first Social Media Influencer Community
+                            </h1>
+                            <p>Earn more money helping brands promote their products and services on Social Media as an Influencer.</p>
+                            <p>
+                                <a href="{% url 'account_signup' %}" class="button is-primary">Create your account</a>
+                            </p>
+                        </div>
+                        <div class="column is-6">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/social_influencer.svg' %}">
+
+                            </object>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display user profiles -->
+    {% if profiles %}
+        <div class="section">
+            <div class="container">
+                <div class="columns is-centered is-multiline">
+                    <div class="column is-10">
+                        <div class="columns is-multiline is-mobile">
+                            {% for profile in profiles.all %}
+                                {% include './parts/profile.html' with profile=profile %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="section is-white is-medium insights-wrapper">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="columns is-aligned-center">
+                        <div class="column is-5">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/insights.svg' %}"></object>
+                        </div>
+                        <div class="column is-7">
+                            <h3 class="title is-3 is-size-5-mobile is-bold">
+                                Want to see how an Instagram account performs?
+                            </h3>
+                            <p>Enter the Instagram <strong>username</strong> below to get FREE insights e.g cristiano</p>
+                            {% include './parts/insights_form.html' with form=form %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

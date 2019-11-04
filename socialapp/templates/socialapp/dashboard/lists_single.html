@@ -1,0 +1,62 @@
+{% extends './dashboard_base.html' %}
+{% load my_human_int %}
+{% block title %}<span class="icon"><i class="fas fa-bookmark"></i></span> <span>{{ list.name }}</span>{% endblock %}
+{% block content %}
+    <div class="box">
+        {% if members %}
+            <form action="#" method="get">
+                <table class="table is-fullwidth is-striped">
+                    <thead>
+                        <tr>
+                            <th width="40"></th>
+                            <th width="200">Influencer</th>
+                            <th>Reach</th>
+                            <th>Account(s)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in members %}
+                            <tr>
+                                <td><input type="checkbox" name="profiles[]" value="{{ member.id }}"></td>
+                                <td><h4 class="title is-6">
+                                    <a href="{% url 'user_profile' user=member.profile.user.username %}">
+                                        {{ member.profile.fullname }}
+                                    </a>
+                                </h4></td>
+                                <td>{{ member.followers|normalize_int }}</td>
+                                <td>
+                                    {% if member.profile.accounts %}
+                                        {% for social_name in member.profile.accounts.all %}
+                                            <span class="icon"><i class="fab fa-{{social_name.social_name}}"></i></span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <label><input type="checkbox" name="selectall" id="selectall"></label>
+                            </td>
+                            <td colspan="3">
+                                <button type="submit" class="button is-primary">Send message</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </form>
+        {% else %}
+            <div>
+                You have not added any influencers to this list
+            </div>
+        {% endif %}
+
+    </div>
+    <a href="{% url 'dashboard_lists' %}" class="is-bold">
+        <span class="icon"><i class="fas fa-arrow-left"></i></span>
+        <span>Back to lists</span>
+    </a>
+{% endblock %}

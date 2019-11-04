@@ -1,0 +1,9 @@
+{% extends './dashboard_base.html' %}
+
+{% block title %}Offer Error{% endblock %}
+{% block content %}
+    <div class="box">
+        <p class="has-text-danger">ERROR 404: The package you are trying to edit does not exist or may have been deleted. </p>
+        <p><a href="{% url 'add_dashboard_package' %}" class="button is-primary">Add new package</a></p>
+    </div>
+{% endblock %}

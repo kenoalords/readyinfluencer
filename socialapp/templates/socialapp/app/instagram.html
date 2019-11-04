@@ -1,0 +1,47 @@
+{% extends '../base/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="section is-medium is-white">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    {% include '../dashboard/parts/messages.html' with messages=messages %}
+                    <div class="columns is-aligned-center">
+                        <div class="column">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/social_girl.svg' %}"></object>
+                        </div>
+                        <div class="column">
+                            <div>
+                                <h1 class="title is-3 is-bold is-size-5-mobile">
+                                    <span class="icon"><i class="fab fa-instagram"></i></span>
+                                    <span>Instagram Insights</span>
+                                </h1>
+                                <p class="subtitle">Gain insights on any public instagram account</p>
+                                {% include './parts/insights_form.html' with form=form %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display user profiles -->
+    {% if profiles %}
+        <div class="section">
+            <div class="container">
+                <div class="columns is-centered is-multiline">
+                    <div class="column is-10">
+                        <div class="columns">
+                            {% for profile in profiles.all %}
+                                {% include './parts/profile.html' with profile=profile %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends './dashboard_base.html' %}
+
+{% block title %}Lists{% endblock %}
+{% block content %}
+    <p>Edit and manage your lists. <strong><a href="{% url 'add_dashboard_package' %}">Add new package</a></strong></p>
+    <div class="box">
+        {% if lists %}
+
+        {% else %}
+        <p>
+            You have not created any lists. <strong><a href="{% url 'add_dashboard_package' %}">Click here to create a list</a></strong>
+        </p>
+        {% endif %}
+    </div>
+{% endblock %}

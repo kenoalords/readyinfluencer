@@ -1,0 +1,87 @@
+{% extends '../../base/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="section is-medium is-white">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="columns is-aligned-center">
+                        <div class="column">
+                            <h1 class="title is-2 is-bold is-size-4-mobile">
+                                How it works
+                            </h1>
+                            <p class="subtitle">InfluenceTick is pretty straigh-forward and here is how to get the most from it.</p>
+                        </div>
+                        <div class="column">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section is-light">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="columns is-aligned-center">
+                        <div class="column">
+                            <div class="content">
+                                <h2 class="title is-3 is-size-5-mobile is-bold">Influencers</h2>
+                                <p>
+                                    Connect with brands easily and find new products to promote
+                                </p>
+                                <p>
+                                    Simply <a href="{% url 'account_signup' %}?utm_source=how_it_works_page_link">create an account</a> and connect your Instagram and Twitter accounts and we will handle the rest. It's that simple
+                                </p>
+                                <p>
+                                    The data we collect from your social media accounts are public data which are then analysed to help brands make better decisions
+                                </p>
+                                <p>Don't have an account?</p>
+                                <p>
+                                    <a href="{% url 'account_signup' %}?utm_source=how_it_works_page_button" class="button is-primary">Sign up now</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/social_girl.svg' %}"></object>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section is-white">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="columns is-aligned-center">
+                        <div class="column">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/brands.svg' %}"></object>
+                        </div>
+                        <div class="column">
+                            <div class="content">
+                                <h2 class="title is-3 is-size-5-mobile is-bold">Brands &amp; Advertisers</h2>
+                                <p>
+                                    Find the right <a href="{% url 'influencers' %}">influencers</a> to promote your products and services with.
+                                </p>
+                                <p>
+                                    <a href="{% url 'account_signup' %}?utm_source=how_it_works_page_link">Create an account</a> and start connecting with influencers today.
+                                </p>
+                                <p>Don't have an account?</p>
+                                <p>
+                                    <a href="{% url 'account_signup' %}?utm_source=how_it_works_page_button" class="button is-primary">Sign up now</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

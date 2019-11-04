@@ -1,0 +1,59 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<h1 class="title is-4 is-bold is-size-5-mobile">{% trans "Create account" %}</h1>
+
+<form class="signup disable-on-submit" id="signup_form" method="post" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+
+    <div class="field">
+        {{ form.username }}
+        {% if form.username.errors %}
+            <span class="help is-danger">{{ form.username.errors }}</span>
+        {% endif %}
+    </div>
+
+    <div class="field">
+        {{ form.email }}
+        {% if form.email.errors %}
+            <span class="help is-danger">{{ form.email.errors }}</span>
+        {% endif %}
+    </div>
+
+    <div class="field">
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+            <span class="help is-danger">{{ form.password1.errors }}</span>
+        {% endif %}
+    </div>
+
+    <div class="field">
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+            <span class="help is-danger">{{ form.password2.errors }}</span>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="field">
+        <h4 class="title is-6 is-bold">Are you signing up as a social media influencer?</h4>
+        <label class="button is-light">
+            {{ form.is_influencer }} &nbsp; &nbsp; {{ form.is_influencer.label }}
+        </label>
+        <span class="help is-danger"><span class="icon"><i class="fas fa-info-circle"></i></span> This <strong class="has-text-danger">cannot</strong> be undone.</span>
+    </div>
+    <hr>
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <div class="field">
+        <button type="submit" class="button is-primary is-fullwidth">{% trans "Create my account" %}</button>
+    </div>
+</form>
+<hr>
+<p>{% blocktrans %}Already have an account? <a href="{{ login_url }}" class="is-bold">Sign in</a>.{% endblocktrans %}</p>
+{% endblock %}

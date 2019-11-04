@@ -1,0 +1,129 @@
+{% extends './dashboard_base.html' %}
+{% block content %}
+    {% if request.GET.account == 'new' %}
+        <h1 class="title is-4 is-size-5-mobile is-bold">Complete your profile</h1>
+    {% else %}
+        <h1 class="title is-4 is-size-5-mobile is-bold">Profile</h1>
+    {% endif %}
+    <p>Edit and manage your profile details here</p>
+    <div class="box">
+        <form action="{% url 'dashboard_profile' %}" class="form is-horizontal" method="post" id="profile-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <!-- First name -->
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    Profile image
+                </div>
+                <div class="field-body">
+                    <span class="help is-danger">{{ form.avatar.errors }}</span>
+                    <label for="{{ form.avatar.id_for_label }}" class="label">
+                        {{ form.avatar }}
+                    </label>
+                </div>
+            </div>
+
+            <!-- First name -->
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <label for="{{ user_form.first_name.id_for_label }}" class="label">{{ user_form.first_name.label }}</label>
+                </div>
+                <div class="field-body">
+                    <span class="help is-danger">{{ user_form.first_name.errors }}</span>
+                    {{ user_form.first_name }}
+                </div>
+            </div>
+
+            <!-- Last name -->
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <label for="{{ user_form.last_name.id_for_label }}" class="label">{{ user_form.last_name.label }}</label>
+                </div>
+                <div class="field-body">
+                    <span class="help is-danger">{{ user_form.last_name.errors }}</span>
+                    {{ user_form.last_name }}
+                </div>
+            </div>
+
+            <!-- Last name -->
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <label for="{{ form.bio.id_for_label }}" class="label">{{ form.bio.label }}</label>
+                </div>
+                <div class="field-body">
+                    <span class="help is-danger">{{ form.bio.errors }}</span>
+                    {{ form.bio }}
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <label for="{{ form.location.id_for_label }}" class="label">{{ form.location.label }}</label>
+                </div>
+                <div class="field-body">
+                    <span class="help is-danger">{{ form.location.errors }}</span>
+                    {{ form.location }}
+                </div>
+            </div>
+
+            <hr>
+
+
+            <!-- Gender -->
+            {% if profile.is_influencer %}
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label for="{{ form.gender.id_for_label }}" class="label">{{ form.gender.label }}</label>
+                    </div>
+                    <div class="field-body">
+                        <span class="help is-danger">{{ form.gender.errors }}</span>
+                        <div class="select">
+                            {{ form.gender }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- URL -->
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label for="{{ form.url.id_for_url }}" class="label">{{ form.url.label }}</label>
+                    </div>
+                    <div class="field-body">
+                        <span class="help is-danger">{{ form.url.errors }}</span>
+                        {{ form.url }}
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+
+                    </div>
+                    <div class="field-body">
+                        <span class="help is-danger">{{ form.politics.errors }}</span>
+                        <label for="{{ form.politics.id_for_url }}" class="label">{{ form.politics }} {{ form.politics.label }}</label>
+                    </div>
+                </div>
+                <!-- Interests -->
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label for="{{ form.interests.id_for_interests }}" class="label">{{ form.interests.label }}</label>
+                    </div>
+                    <div class="field-body">
+                        <span class="help is-danger">{{ form.interests.errors }}</span>
+                        <div class="select is-multiple">
+                            {{ form.interests }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="field is-horizontal">
+                <div class="field-label"></div>
+                <div class="field-body">
+                    <button type="submit" class="button is-primary">Save Profile</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

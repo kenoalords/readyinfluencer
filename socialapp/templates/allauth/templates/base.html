@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <title>{% block head_title %}{% endblock %}</title>
+        {% block extra_head %}
+        {% endblock %}
+        <link rel="stylesheet" href="{% static 'socialapp/app.css' %}">
+        <link rel="icon" href="{% static 'socialapp/images/favicon.png' %}" type="image/png">
+    </head>
+    <body>
+        <div id="account" class="hero is-fullheight">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="has-text-centered">
+                        <a href="{% url 'index' %}" id="logo">
+                            <img src="{% static 'socialapp/images/logo_5.png' %}" alt="ReadyInfluencer">
+                        </a>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-4">
+
+                            <div class="box">
+                                {% block body %}
+
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    <div class="notification">{{message}}</div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% block content %}
+                                {% endblock %}
+                                {% endblock %}
+                                {% block extra_body %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <link rel="stylesheet" href="{% static 'socialapp/app.js' %}">
+    </body>
+</html>

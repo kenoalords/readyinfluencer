@@ -1,0 +1,20 @@
+<table class="table is-fullwidth is-striped is-hoverable is-padded">
+    <tbody>
+        {% for list in lists %}
+            <tr>
+                <td>
+                    <h4 class="title is-6 is-marginless">
+                        <a href="{% url 'dashboard_list_single' list=list.id %}">
+                            {{ list.name }}
+                        </a>
+                    </h4>
+                </td>
+                <td>{{ list.profiles.count }} influencer(s)</td>
+                <td class="has-text-right">
+                    <a href="{% url 'dashboard_list_single' list=list.id %}" class="button is-small">View list</a>
+                    <a href="{% url 'dashboard_list_delete' list=list.id %}" class="button is-small"><i class="fas fa-times"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

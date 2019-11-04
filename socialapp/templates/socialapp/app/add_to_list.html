@@ -1,0 +1,39 @@
+{% extends '../base/base.html' %}
+{% load humanize my_human_int engagements %}
+{% block content %}
+    <!-- <div class="section is-medium is-dark"></div> -->
+    <div class="section is-medium">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-4">
+                    {% include '../dashboard/parts/messages.html' with messages=messages %}
+                    {% include './parts/profile_single.html' with profile=profile %}
+                    <div class="box">
+                        <form action="{% url 'add_user_profile_to_list' user=profile.user.username %}" method="post">
+                            {% csrf_token %}
+                            {% if lists.count > 0 %}
+                            <div class="field is-grouped is-expanded">
+                                <div class="select control">
+                                    <select name="list" id="lists" class="is-expanded">
+                                        {% for list in lists %}
+                                        <option value="{{ list.id }}">{{ list.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="control">
+                                    <button type="submit" class="button is-primary is-fullwidth">Add to list</button>
+                                </div>
+                            </div>
+
+                            {% else %}
+                                <p class="has-text-danger">
+                                    You have not created any list, <strong><a href="{% url 'dashboard_lists' %}">Create your first list here</a></strong>
+                                </p>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

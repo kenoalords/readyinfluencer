@@ -1,0 +1,51 @@
+{% extends './dashboard_base.html' %}
+
+{% block title %}Edit Offer{% endblock %}
+{% block content %}
+    <div class="box">
+        <form action="{% url 'edit_dashboard_package' id=package.id %}" method="post" class="package-form">
+            {% csrf_token %}
+
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <label for="{{ package_form.title.id_for_title }}" class="label">Title</label>
+                </div>
+                <div class="field-body">
+                    <span class="help is-danger">{{ package_form.title.errors }}</span>
+                    {{ package_form.title }}
+                </div>
+            </div>
+            {{ package_item_form.management_form }}
+            {% for item in package_item_form %}
+                {{ item.id }}
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label for="{{ item.title.id_for_title }}" class="label">{{ item.title.label }} {{ item.index }}</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-grouped">
+                            <div class="control">
+                                {{ item.title }}
+                                <span class="help is-danger">{{ item.title.errors }}</span>
+                            </div>
+                            <div class="control">
+                                {{ item.cost }}
+                                <span class="help is-danger">{{ item.cost.errors }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="field">
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                    </div>
+                    <div class="field-body">
+                        <button type="submit" class="button is-primary">Save package</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

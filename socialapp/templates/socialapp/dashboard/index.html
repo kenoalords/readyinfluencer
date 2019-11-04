@@ -1,0 +1,65 @@
+{% extends './dashboard_base.html' %}
+
+{% load humanize my_human_int %}
+{% block title %}<span class="icon"><i class="fas fa-tachometer-alt"></i></span> <span>Dashboard</span>{% endblock %}
+{% block content %}
+    {% if user_profile.is_influencer %}
+    <div class="level is-white is-stats">
+        <div class="level-item has-text-centered">
+            <div>
+                {% if stats.socials.twitter %}
+                    <p class="heading">Twitter</p>
+                    <p class="title" data-followers="{{stats.socials.twitter.0}}">{{ stats.socials.twitter.0|normalize_int }}</p>
+                {% else %}
+                    <p class="heading">Twitter</p>
+                    <a href="{% url 'social_media_connect' %}" class="button is-twitter">
+                        <span class="icon"><i class="fab fa-twitter"></i></span>
+                        <span>Connect Twitter</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                {% if stats.socials.instagram %}
+                    <p class="heading"><span class="icon"><i class="fab fa-instagram"></i></span> <span>Instagram</span></p>
+                    <p class="title" data-followers="{{stats.socials.instagram.0}}">{{ stats.socials.instagram.0|normalize_int }}</p>
+                {% else %}
+                    <p class="heading">Instagram</p>
+                    <a href="{% url 'social_media_connect' %}" class="button is-instagram">
+                        <span class="icon"><i class="fab fa-instagram"></i></span>
+                        <span>Connect Instagram</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                {% if stats.total %}
+                <p class="heading">Total Reach</p>
+                <p class="title">{{ stats.total|normalize_int }}</p>
+                {% else %}
+                <p class="heading">Total Reach</p>
+                <p class="title">0</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="box">
+        <h2 class="title is-5"><span class="icon"><i class="fas fa-bookmark"></i></span> <span>Lists</span> </h2>
+    {% if user_profile.lists.all %}
+        {% include 'socialapp/dashboard/parts/lists.html' with lists=user_profile.lists.all %}
+    {% else %}
+        <p>
+            {% if user_profile.is_influencer %}
+                Organize and collaborate with other influencers by creating lists. <a href="{% url 'dashboard_lists' %}" class="is-bold">Create a list</a>
+            {% else %}
+                Organize your workflow by creating lists and adding influencers to better manage your campaigns. <a href="{% url 'dashboard_lists' %}" class="is-bold">Create a list</a>
+            {% endif %}
+        </p>
+    {% endif %}
+    </div>
+
+{% endblock %}

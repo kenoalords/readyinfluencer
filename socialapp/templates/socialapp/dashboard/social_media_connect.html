@@ -1,0 +1,52 @@
+{% extends './dashboard_base.html' %}
+
+{% block title %}Connect{% endblock %}
+{% block content %}
+    <div class="box">
+        <div class="columns is-mobile">
+            <div class=" has-text-center" style="width: 80px">
+                <i class="fab fa-instagram fa-3x has-text-instagram" style="display: inline-block"></i>
+            </div>
+            <div class="">
+                {% if not account.instagram %}
+                <h2 class="title is-5" style="margin-bottom: .5em">Connect your Instagram account</h2>
+                <p>
+                    Connecting your Instagram account will give us access to your public information only. We do not have access to your private information such as email, password and archieved posts.
+                </p>
+                <a href="{{ instagram_url }}" class="button is-instagram disable-on-click">Connect Instagram</a>
+                {% else %}
+                    <h2 class="title is-5" style="margin-bottom: .5em">
+                        <span class="icon"><i class="fas fa-check-circle"></i></span>
+                        <span>Connected</span>
+                    </h2>
+                    <p>Your Instagram account is connected successfully</p>
+                    <a href="{{ instagram_url }}" class="button is-instagram disable-on-click">Reconnect</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="columns is-mobile">
+            <div style="width: 80px;">
+                <i class="fab fa-twitter fa-3x has-text-twitter" style="display: inline-block"></i>
+            </div>
+            <div>
+                {% if not account.twitter %}
+                <h2 class="title is-5 is-size-5-mobile"  style="margin-bottom: .5em">Connect your Twitter account</h2>
+                <p>
+                    Your Twitter account will only give us access to your public information such as Tweets, Likes and Retweets. We do not have access to your private information such as email, password and archieved posts.
+                </p>
+                <a href="{% url 'social_media_connect_twitter' %}" class="button is-twitter disable-on-click">Connect Twitter</a>
+                {% else %}
+                    <h2 class="title is-5" style="margin-bottom: .5em">
+                        <span class="icon"><i class="fas fa-check-circle"></i></span>
+                        <span>Connected</span>
+                    </h2>
+                    <p>Your Twitter account is connected successfully</p>
+                    <a href="{% url 'social_media_connect_twitter' %}" class="button is-twitter disable-on-click">Reconnect</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

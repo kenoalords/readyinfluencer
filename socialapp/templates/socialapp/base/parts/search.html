@@ -1,0 +1,12 @@
+<form action="{% url 'search' %}" method="get">
+    <div class="field has-addons">
+        <div class="control is-expanded">
+            <input type="search" class="input" name="q" placeholder="Search influencers..." value="{{ request.GET.q }}" required>
+        </div>
+        <div class="control">
+            <button type="submit" class="button is-primary is-bold">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+</form>

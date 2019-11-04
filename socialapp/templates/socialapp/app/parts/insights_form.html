@@ -1,0 +1,17 @@
+<form action="{% url 'instagram' %}" method="post" class="disable-on-submit">
+    {% csrf_token %}
+    <div class="field has-addons">
+        <div class="control has-icons-left">
+            {{ form.username }}
+            <span class="icon is-small is-left">
+                <i class="fab fa-instagram"></i>
+            </span>
+        </div>
+        <div class="control">
+            <button type="submit" class="button is-primary is-bold">Get insights</button>
+        </div>
+    </div>
+    <div class="field">
+        {{ form.captcha }}
+    </div>
+</form>

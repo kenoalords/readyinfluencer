@@ -1,0 +1,18 @@
+{% extends './dashboard_base.html' %}
+{% load my_human_int %}
+
+{% block content %}
+    <div class="columns is-centered">
+        <div class="column is-5">
+            <div class="box">
+                <h4 class="title is-5 is-bold">You are about to delete your list <a href="{% url 'dashboard_list_single' list=list.id %}" style="text-decoration: underline">{{ list.name }}</a>. This action cannot be undone.</h4>
+                <p>This list currently contains <strong>{{ list.count }} influencer(s)</strong></p>
+                <form action="{% url 'dashboard_list_delete' list=list.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="list_id" value="{{ list.id }}">
+                    <button type="submit" class="button is-danger is-fullwidth">Delete this list</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

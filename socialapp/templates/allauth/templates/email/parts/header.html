@@ -1,0 +1,11 @@
+{% load static %}
+<td width="40%" class="logo" style="text-align: left;">
+    <h1><a href="{{ current_site.domain }}?utm_source=email_header">
+        <img src="{{ current_site.domain }}{% static 'socialapp/images/logo_5.png' %}" alt="ReadyInfluencer" style="width:180px; height: auto;">
+    </a></h1>
+  </td>
+  <td width="60%" class="logo" style="text-align: right;">
+    <ul class="navigation">
+        <li><a href="{{ current_site.domain }}{% url 'search' %}">Find Influencers</a></li>
+    </ul>
+  </td>

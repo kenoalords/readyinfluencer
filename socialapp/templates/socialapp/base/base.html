@@ -1,0 +1,12 @@
+{% include "./parts/header.html" %}
+{% load static %}
+<body>
+    {% include "./parts/navbar.html" %}
+    <div id="wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% include "./parts/footer.html" %}
+    <script type="text/javascript" src="{% static 'socialapp/app.js' %}"></script>
+</body>
+</html>

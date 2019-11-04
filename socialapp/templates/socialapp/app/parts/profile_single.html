@@ -1,0 +1,33 @@
+{% load my_human_int %}
+<div style="margin-bottom: 2em">
+    <div class="media box">
+        <div class="media-left">
+            <figure class="image is-64x64 is-clipped-img" style="background: url({{ profile.thumbnail }}) no-repeat center; background-size: cover">
+                <a href="{% url 'user_profile' profile.user.username %}">
+                    <img src="{{ profile.thumbnail }}" alt="Influencer {{ profile.fullname }}" class="is-rounded">
+                </a>
+            </figure>
+        </div>
+        <div class="media-content">
+            <div class="content">
+                <h4 class="title is-6 is-bold" style="margin-bottom: .5em">
+                    <a href="{% url 'user_profile' profile.user.username %}">{{ profile.fullname }}</a>
+                </h4>
+                <div class="level stats is-mobile">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <strong>{{ profile.reach|normalize_int }}</strong> &nbsp; Reach
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        {% for social in profile.followers.all %}
+                        <div class="level-item">
+                            <i class="fab fa-{{social.social_name}}"></i>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

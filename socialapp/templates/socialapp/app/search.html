@@ -1,0 +1,41 @@
+{% extends '../base/base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Display user profiles -->
+    {% if profiles %}
+        <div class="section is-medium">
+            <div class="container">
+                <div class="columns is-multiline">
+                {% for profile in profiles.all %}
+                    {% include './parts/profile.html' with profile=profile %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+        <div class="section is-large is-white">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-8">
+                        <h1 class="title is-1 is-size-4-mobile is-bold">No influencer found!</h1>
+                        <p>
+                            We couldn't find any influencer matching your search term "{{ request.GET.q }}", please try a different search.
+                        </p>
+                        {% if user_interests %}
+                            {% for interest in user_interests %}
+                                <a href="{% url 'search' %}?q={{ interest.interest }}" class="tag">
+                                    <span class="icon"><i class="fas fa-tag"></i></span>
+                                    <span>{{ interest.interest }}</span>
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}

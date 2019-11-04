@@ -1,0 +1,7 @@
+node_modules
+assets
+server.crt
+server.key
+webpack.mix.js
+mix-manifest.json
+package.json

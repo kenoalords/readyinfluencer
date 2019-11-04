@@ -1,0 +1,18 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+Hello!
+
+Glad to have you onboard.
+You need to verify your email address and you are all set.
+
+Copy and paste the link below on your browser to verify your email.
+
+{{ activate_url }}
+
+Your login details:
+Username: {{ user_display }}
+Password: 🤪(we weren't going to show that)
+
+{% endblocktrans %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Cheers!
+{{ site_domain }}{% endblocktrans %}
+{% endautoescape %}

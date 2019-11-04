@@ -1,0 +1,32 @@
+{% extends './dashboard_base.html' %}
+
+{% block title %}<span class="icon"><i class="fas fa-bookmark"></i></span> <span>Lists</span>{% endblock %}
+{% block content %}
+    <p>Edit and manage your social media influencer lists.</p>
+    <div class="box">
+        <form action="{% url 'dashboard_lists' %}" method="post">
+            {% csrf_token %}
+            {{ form.none_field_errors }}
+            <p><label for="">Quickly add a new list</label></p>
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    {{ form.name }}
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-primary">Create new list</button>
+                </div>
+            </div>
+            {{ form.name.errors }}
+        </form>
+    </div>
+    <div class="box">
+
+        {% if lists %}
+            {% include 'socialapp/dashboard/parts/lists.html' with lists=lists %}
+        {% else %}
+        <p>
+            You have not created any lists. Enter the title of your list above and click create list.
+        </p>
+        {% endif %}
+    </div>
+{% endblock %}

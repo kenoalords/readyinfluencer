@@ -1,0 +1,17 @@
+{% extends './dashboard_base.html' %}
+
+{% load humanize my_human_int %}
+{% block title %}Connection Failed {% endblock %}
+{% block content %}
+
+    <div class="box">
+        <p>There was a problem connecting your <strong><a href="{% url 'social_media_connect' %}">{{ request.GET.social|title }}</a></strong> account</p>
+        <p>
+            <a href="{% url 'social_media_connect' %}" class="button is-primary">
+                <span class="icon"><i class="fas fa-redo-alt"></i></span>
+                <span>Try again</span>
+            </a>
+        </p>
+    </div>
+
+{% endblock %}

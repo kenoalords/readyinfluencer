@@ -1,0 +1,69 @@
+{% extends '../base/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="section is-medium is-white">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="has-text-centered">
+                        <h1 class="title is-3 is-bold is-size-5-mobile">
+                            Find influencers
+                        </h1>
+                        {% if user_interests %}
+                            <ul class="hero-interests">
+                                {% for interest in user_interests %}
+                                    <li>
+                                        <a href="{% url 'search' %}?q={{ interest.interest }}" class="tag">
+                                            <!-- <span class="icon"><i class="fas fa-tag"></i></span> -->
+                                            <span>{{ interest.interest }}</span>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display user profiles -->
+    {% if profiles %}
+        <div class="section">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-10">
+                        <div class="columns is-mobile is-multiline">
+                            {% for profile in profiles.all %}
+                                {% include './parts/profile.html' with profile=profile %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="section is-white is-medium">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="columns is-aligned-center">
+                        <div class="column">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/insights.svg' %}"></object>
+                        </div>
+                        <div class="column">
+                            <h3 class="title is-3 is-size-5-mobile is-bold">
+                                Want to see how an Instagram account performs?
+                            </h3>
+                            <p>Enter the Instagram <strong>username</strong> below to get FREE insights e.g cristiano</p>
+                            {% include './parts/insights_form.html' with form=form %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

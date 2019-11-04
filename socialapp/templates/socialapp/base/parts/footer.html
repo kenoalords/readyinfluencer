@@ -1,0 +1,53 @@
+{% load static %}
+<footer class="footer" id="site-footer">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <a href="{% url 'index' %}">
+                    <figure class="image">
+                        <img src="{% static 'socialapp/images/footer-icon.png' %}" alt="" class="footer-logo">
+                    </figure>
+                </a>
+                <p>
+                    Connecting Instagram and Twitter influencers with the right brand and businesses.
+                </p>
+            </div>
+            <div class="column">
+                {% if user_interests %}
+                    <h4 class="title is-6">Find influencer by interest</h4>
+                    <ul class="footer-interests">
+                        {% for interest in user_interests %}
+                            <li>
+                                <a href="{% url 'search' %}?q={{ interest.interest }}" class="tag">
+                                    {{ interest.interest }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="column">
+                <h4 class="title is-6">Learn More</h4>
+                <ul>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'influencers' %}">Influencers</a></li>
+                    <li><a href="{% url 'how_it_works' %}">How it works</a></li>
+                    <li><a href="{% url 'instagram' %}">Instagram Insights</a></li>
+                </ul>
+            </div>
+            <div class="column">
+                <h4 class="title is-6">Useful Links</h4>
+                <ul>
+                    <li><a href="3">Contact</a></li>
+                    <li><a href="3">Terms &amp; conditions</a></li>
+                    <li><a href="">Privacy policy</a></li>
+                    <li><a href="">Disclaimer</a></li>
+                    <li><a href="">Report a problem</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <hr>
+        <div class="credits">&copy; Copyright 2019 - All rights reserved</div>
+    </div>
+</footer>

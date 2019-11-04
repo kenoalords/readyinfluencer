@@ -1,0 +1,44 @@
+{% extends './dashboard_base_message.html' %}
+{% load humanize %}
+
+{% block title %}<span class="icon"><i class="fas fa-comments"></i></span> <span>Conversation</span>{% endblock %}
+{% block content %}
+    <div class="box inverted" id="message-wrapper">
+        {% if chats %}
+        <ul class="message-list">
+            {% for chat in chats.messages.all %}
+                <li class="{% if chat.sender_profile.user == request.user %}sender{% else %}receiver{% endif %}">
+                    <div class="chat">
+                        <div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-32x32 is-clipped-img" style="background: url({{ chat.sender_profile.thumbnail }}) no-repeat center; background-size: cover;">
+                                        <img src="{{ chat.sender_profile.thumbnail }}" alt="" class="is-rounded">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p>{{ chat.message }}</p>
+                                    <span class="help date">{{ chat.date|naturaltime }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <div class="box">
+        <form action="{% url 'dashboard_view_message' id=chats.id %}" method="post">
+            {% csrf_token %}
+            <div class="field">
+                {{ form.message }}
+                <span class="help is-danger">{{ form.message.errors }}</span>
+            </div>
+            <div class="field"><button type="submit" class="button is-primary is-fullwidth">
+                <span class="icon"><i class="fas fa-paper-plane"></i></span>
+                <span>Send message</span>
+            </button></div>
+        </form>
+    </div>
+{% endblock %}

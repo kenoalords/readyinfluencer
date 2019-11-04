@@ -1,0 +1,41 @@
+{% extends '../base/base.html' %}
+{% load humanize my_human_int engagements %}
+{% block content %}
+    <!-- <div class="section is-medium is-dark"></div> -->
+    <div class="section is-medium">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-4">
+                    {% include '../dashboard/parts/messages.html' with messages=messages %}
+
+                    <h4 class="title is-5">
+                        <span class="icon"><i class="fas fa-comment"></i></span>
+                        <span>Start a conversation</span>
+                    </h4>
+                    {% include './parts/profile_single.html' with profile=profile %}
+                    <div class="box">
+                        {% if profile.user != request.user %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="field">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="field">
+                                <button type="submit" class="button is-primary is-fullwidth">Send message</button>
+                            </div>
+                        </form>
+                        {% else %}
+                        <h4 class="title is-6 has-text-danger">
+                            You cannot start a conversation with yourself.
+                        </h4>
+                        {% endif %}
+                    </div>
+                    <a href="{{ request.META.HTTP_REFERER }}" class="is-bold">
+                        <span class="icon"><i class="fas fa-arrow-left"></i></span>
+                        <span>Back</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends './dashboard_base.html' %}
+
+{% block title %}Offers{% endblock %}
+{% block content %}
+    <p>Edit and manage your social media advertising packages here. <strong><a href="{% url 'add_dashboard_package' %}">Add new package</a></strong></p>
+    <div class="box">
+        {% if packages %}
+        <table class="table is-fullwidth is-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Item(s)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in packages %}
+                <tr>
+                    <td>
+                        <h4 class="title is-6 is-marginless">{{ package.title }}</h4>
+                        <ul class="links">
+                            <li><a href="{% url 'edit_dashboard_package' id=package.id %}">Edit</a></li>
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+                    </td>
+                    <td>
+                        {% for item in package.items.all %}
+                            <p class="is-marginless">{{ item.title }} - {{ item.cost|floatformat:0 }}</p>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>
+            You have not set up any social media advertising packages yet. <strong><a href="{% url 'add_dashboard_package' %}">Click here to add a package</a></strong>
+        </p>
+        {% endif %}
+    </div>
+{% endblock %}

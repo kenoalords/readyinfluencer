@@ -1,0 +1,43 @@
+{% extends './dashboard_base.html' %}
+{% load humanize %}
+{% block title %}<span class="icon"><i class="fas fa-comment"></i></span> <span>Messages</span>{% endblock %}
+{% block content %}
+    {% if convos %}
+        <div class="box" id="messages">
+            {% for convo in convos %}
+                <a href="{% url 'dashboard_view_message' id=convo.id %}">
+                <div class="level is-mobile is-hoverable">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <figure class="image is-32x32 is-clipped-img" style="background: url({{ convo.receiver.thumbnail }}) no-repeat center; background-size: cover;">
+                                <img class="is-rounded" src="{{ convo.receiver.thumbnail }}" alt="{{ convo.receiver.fullname }}">
+                            </figure>
+                        </div>
+                        <div class="level-item">
+                            <p class="is-marginless">
+                                <strong>
+                                    {% if convo.sender.user == request.user %}
+                                        {{ convo.receiver.fullname }}
+                                    {% else %}
+                                        {{ convo.sender.fullname }}
+                                    {% endif %}
+                                </strong>
+                            </p>
+                            <p class="">{{ convo.last_message.message }}</p>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item date">
+                            {{ convo.last_message.date|naturaltime }}
+                        </div>
+                    </div>
+                </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="box">
+            <h4 class="title is-6 has-text-danger">You do not have any messages</h4>
+        </div>
+    {% endif %}
+{% endblock %}

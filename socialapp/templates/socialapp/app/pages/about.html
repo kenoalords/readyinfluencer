@@ -1,0 +1,44 @@
+{% extends '../../base/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="section is-medium is-white">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="columns is-aligned-center">
+                        <div class="column">
+                            <h1 class="title is-2 is-bold is-size-4-mobile">
+                                Helping social media influencers and brands connect.
+                            </h1>
+                            <p class="subtitle">That is all we do.</p>
+                        </div>
+                        <div class="column">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/social_girl.svg' %}"></object>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section is-light">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <h2 class="title is-5 is-bold">About</h2>
+                        <p>
+                            I'm just an ideas guy who believes <a href="{% url 'influencers' %}">influencers</a> and brands should find a place to connect.
+                        </p>
+                        <p>
+                            Finding the right <a href="{% url 'influencers' %}">influencer</a> to promote your products can be a hassel and this platform tries to solve this common problem by giving you the right tools to analyse and choose the right <a href="{% url 'influencers' %}">influencer</a> for better ROI.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
