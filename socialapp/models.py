@@ -38,10 +38,10 @@ class Profile(models.Model):
     influencer = ProfileManager()
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return '%s %s' % (self.user.first_name, self.user.last_name)
 
     def fullname(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return '%s %s' % (self.user.first_name, self.user.last_name)
 
     def save(self, *args, **kwargs):
         # super().save(*args, **kwargs)
@@ -102,7 +102,7 @@ class SocialMediaFollower(models.Model):
         ordering = ['-date']
 
     def __str__(self):
-        return f'{self.social_name} - {self.followers}'
+        return '%s %s' % (self.social_name, self.followers)
 
 class SocialMediaFollowerGrowth(models.Model):
     social_name = models.CharField(max_length=32)
@@ -113,7 +113,7 @@ class SocialMediaFollowerGrowth(models.Model):
         ordering = ['-date']
 
     def __str__(self):
-        return f'{self.social_name} - {self.followers}'
+        return '%s %s' % (self.social_name, self.followers)
 
 class SocialMediaEngagement(models.Model):
     social_name = models.CharField(max_length=32)
