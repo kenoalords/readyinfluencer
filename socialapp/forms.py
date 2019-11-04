@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.forms.widgets import ClearableFileInput
-from captcha.fields import ReCaptchaField, ReCaptchaV3
+f#rom captcha.fields import ReCaptchaField, ReCaptchaV3
 
 
 # App
