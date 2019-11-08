@@ -6,6 +6,7 @@ import cgi
 import numpy as np
 from PIL import Image
 import os
+from sentry_sdk import capture_exception
 
 
 # Django
@@ -85,6 +86,7 @@ class InstagramTemplateView(TemplateView):
 				data = instagram_crawler(form.cleaned_data['username'])
 			except Exception as e:
 				messages.error(request, "We couldn't find any insights on %s, please check the username and try again" % form.cleaned_data['username'])
+				capture_exception(e)
 				return render(request, self.template_name, context={ 'form': form })
 			if data['username']:
 				fullname = data['full_name']
