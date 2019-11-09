@@ -73,7 +73,7 @@ class Profile(models.Model):
         try:
             return self.avatar.url
         except Exception:
-            return settings.STATIC_URL + 'no_user_profile-pic.jpg'
+            return settings.STATIC_URL + 'no-user.png'
 
     def get_absolute_url(self):
         from django.urls import reverse

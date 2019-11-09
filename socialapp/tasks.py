@@ -5,16 +5,18 @@ import json
 import requests
 from bs4 import BeautifulSoup
 import datetime
+from sentry_sdk import capture_exception
 
 # Django Imports
 from socialapp.models import SocialMediaFollower, SocialMediaEngagement, SocialMediaUser, Profile
 from django.contrib.auth.models import User
 from django.db.models import Max
 
+
 # Social imports
 from socialapp.twitter import get_twitter_profile, get_user_tweets
 from socialapp.instagram import get_instagram_profile_details, update_instagram_profile_media
-
+from socialapp.instacrawler import InstagramScraper
 # Twitter profile
 @shared_task
 def save_twitter_followers_task(user_id):
@@ -97,14 +99,11 @@ def crawl_user_instagram_page(user_id):
     try:
         instagram_profile = SocialMediaUser.objects.get(profile__user=user, social_name='instagram')
         url = 'https://instagram.com/%s/' % (instagram_profile.social_username)
-        req = requests.get(url)
-        if req.status_code == 200:
-            soup = BeautifulSoup(req.content, 'html.parser')
-            import re
-            graphql = soup.find(string=re.compile("graphql"))
-            data = json.loads(graphql.replace('window._sharedData = ', '').replace(';',''))
-            profiledata = data['entry_data']['ProfilePage'][0]['graphql']['user']
-            if len(profiledata) > 0:
+        try:
+            k = InstagramScraper()
+            req = k.profile_page_metrics(url)
+
+            if len(req) > 0:
                 # Update User Social Media Profile
                 try:
                     instagram = SocialMediaFollower.objects.get(profile__user=user, social_name="instagram")
@@ -128,6 +127,9 @@ def crawl_user_instagram_page(user_id):
             else:
                 # Send a mail to admin
                 pass
+        except Exception as e:
+            capture_exception(e)
+            return None
     except SocialMediaUser.DoesNotExist:
         return None
 

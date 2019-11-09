@@ -6,21 +6,29 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-10">
-                    <div class="columns is-multiline reverse-on-mobile">
-                        <div class="column is-6">
-                            <h1 class="title is-1 is-bold is-size-4-mobile">
-                                Nigeria's first Social Media Influencer Community
-                            </h1>
-                            <p>Earn more money helping brands promote their products and services on Social Media as an Influencer.</p>
-                            <p>
-                                <a href="{% url 'account_signup' %}" class="button is-primary">Create your account</a>
-                            </p>
-                        </div>
-                        <div class="column is-6">
-                            <object type="image/svg+xml" data="{% static 'socialapp/images/social_influencer.svg' %}">
+                    <div class="columns is-multiline">
+                        <div class="column is-5">
+                            <object type="image/svg+xml" data="{% static 'socialapp/images/social_influencer_2_1.svg' %}">
 
                             </object>
                         </div>
+                        <div class="column is-6 is-offset-1">
+                            <h1 class="title is-2 is-bold is-size-4-mobile">
+                                Find Instagram and Twitter ready influencers for your campaigns
+                            </h1>
+                            <p>Earn more money helping brands promote their products and services on Social Media as an Influencer.</p>
+                            {% if request.user.is_authenticated %}
+                            <p>
+                                <a href="{% url 'influencers' %}" class="button is-link">Find Influencers</a>
+                            </p>
+                            {% else %}
+                            <p>
+                                <a href="{% url 'account_signup' %}" class="button is-primary">Create your account</a>
+                            </p>
+
+                            {% endif %}
+                        </div>
+
                     </div>
                 </div>
             </div>

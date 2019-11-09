@@ -9,3 +9,4 @@ package-lock.json
 socialinfluence/settings.py
 media
 influencer
+chromedriver

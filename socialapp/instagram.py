@@ -7,12 +7,16 @@ import pprint
 import datetime
 import numpy as np
 
+# from selenium import webdriver
+
 # Django
 from django.conf import settings
 from django.urls import reverse
 from socialapp.models import SocialMediaUser, SocialMediaFollower, SocialMediaEngagement, Profile
 from django.db.models import Avg, Sum, Max
 from django.http import Http404
+
+from socialapp.instacrawler import InstagramScraper
 
 def get_instagram_profile_details(user):
     try:
@@ -105,17 +109,25 @@ def instagram_stats(req):
     return media
 
 
+# def instagram_crawler(username):
+#     instagram_url = "https://instagram.com/%s" % username.lower()
+#     req = requests.get(instagram_url)
+#     if req.status_code == 200:
+#         bs = BeautifulSoup(req.content, 'html.parser')
+#         import re
+#         scripts = bs.find(string=re.compile("graphql"))
+#         d = json.loads(scripts.replace('window._sharedData = ', '').replace(';',''))
+#         return d['entry_data']['ProfilePage'][0]['graphql']['user']
+#     else:
+#         raise Http404
+
 def instagram_crawler(username):
-    instagram_url = "https://instagram.com/%s" % username.lower()
-    req = requests.get(instagram_url)
-    if req.status_code == 200:
-        bs = BeautifulSoup(req.content, 'html.parser')
-        import re
-        scripts = bs.find(string=re.compile("graphql"))
-        d = json.loads(scripts.replace('window._sharedData = ', '').replace(';',''))
-        return d['entry_data']['ProfilePage'][0]['graphql']['user']
-    else:
-        raise Http404
+    instagram_url = "https://instagram.com/%s/?hl=en" % username.lower()
+    try:
+        scraper = InstagramScraper()
+        return scraper.profile_page_metrics(instagram_url)
+    except Exception as e:
+        return None
 
 def instagram_crawler_stats(data):
     comments = []
@@ -132,18 +144,19 @@ def instagram_crawler_stats(data):
         for image in data['edge_owner_to_timeline_media']['edges']:
             comments.append(image['node']['edge_media_to_comment']['count'])
             likes.append(image['node']['edge_liked_by']['count'])
-
-    total_comments = sum(comments)
-    total_likes = sum(likes)
-    average_comments = np.round( total_comments/len(comments), 2 )
-    average_likes = np.round(total_likes/len(likes), 2)
-    return {
-            'total_comments': total_comments,
-            'total_likes': total_likes,
-            'average_comments': average_comments,
-            'average_likes': average_likes,
-            'engagement_rate': np.round( (average_comments+average_likes)/followers * 100, 2 )
-        }
-
+    try:
+        total_comments = sum(comments)
+        total_likes = sum(likes)
+        average_comments = np.round( total_comments/len(comments), 2 )
+        average_likes = np.round(total_likes/len(likes), 2)
+        return {
+                'total_comments': total_comments,
+                'total_likes': total_likes,
+                'average_comments': average_comments,
+                'average_likes': average_likes,
+                'engagement_rate': np.round( (average_comments+average_likes)/followers * 100, 2 )
+            }
+    except Exception as e:
+            return None
 
 # End

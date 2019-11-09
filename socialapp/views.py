@@ -86,7 +86,8 @@ class InstagramTemplateView(TemplateView):
 				data = instagram_crawler(form.cleaned_data['username'])
 			except Exception as e:
 				messages.error(request, "We couldn't find any insights on %s, please check the username and try again" % form.cleaned_data['username'])
-				capture_exception(e)
+				# capture_exception(e)
+				print(e)
 				return render(request, self.template_name, context={ 'form': form })
 			if data['username']:
 				fullname = data['full_name']
@@ -95,7 +96,13 @@ class InstagramTemplateView(TemplateView):
 				following = data['edge_follow']['count']
 				picture = data['profile_pic_url']
 				username = data['username']
-				stats = instagram_crawler_stats(data) # average_likes, average_comments, engagement_rate
+				try:
+					stats = instagram_crawler_stats(data) # average_likes, average_comments, engagement_rate
+				except Exception as e:
+					messages.error(request, "We couldn't find any insights on %s, please check the username and try again" % form.cleaned_data['username'])
+					# capture_exception(e)
+					print(e)
+					return render(request, self.template_name, context={ 'form': form })
 
 				try:
 					insights = InstagramInsight.objects.get(user_account=username)
@@ -110,9 +117,20 @@ class InstagramTemplateView(TemplateView):
 					insights.save()
 					return HttpResponseRedirect(reverse('instagram_profile', kwargs={ 'user': username }))
 				except InstagramInsight.DoesNotExist:
-					insights = InstagramInsight(user_account=username, ip_address=request.META['REMOTE_ADDR'], followers=followers, following=following, engagement_rate=stats['engagement_rate'], average_likes=stats['average_likes'], average_comments=stats['average_comments'], pic=picture, fullname=fullname, bio=biography)
-					insights.save()
-					return HttpResponseRedirect(reverse('instagram_profile', kwargs={ 'user': username }))
+					try:
+						insights = InstagramInsight(user_account=username, ip_address=request.META['REMOTE_ADDR'], followers=followers, following=following, engagement_rate=stats['engagement_rate'], average_likes=stats['average_likes'], average_comments=stats['average_comments'], pic=picture, fullname=fullname, bio=biography)
+						insights.save()
+						return HttpResponseRedirect(reverse('instagram_profile', kwargs={ 'user': username }))
+					except Exception as e:
+						messages.error(request, "We couldn't find any insights on %s, please check the username and try again" % form.cleaned_data['username'])
+						# capture_exception(e)
+						print(e)
+						return render(request, self.template_name, context={ 'form': form })
+				except Exception as e:
+					messages.error(request, "We couldn't find any insights on %s, please check the username and try again" % form.cleaned_data['username'])
+					# capture_exception(e)
+					print(e)
+					return render(request, self.template_name, context={ 'form': form })
 			else:
 				messages.error(request, "We couldn't find any insights on %s, please check the username and try again" % form.cleaned_data['username'])
 				return render(request, self.template_name, context={ 'form': form })
